@@ -1,20 +1,22 @@
 .windowFrame {
-	animation: 0.5s windowOpen cubic-bezier(0.19, 1, 0.22, 1);
 	transform-origin: center center;
 	transform: none;
-	width: calc(100% - 16px);
-	height: calc(100% - 16px);
+	width: calc(100% - 20px);
+	height: calc(100% - 18px);
 	box-shadow:
 		0px 0px 8px 1px #000000c3,
 		inset 0px 0px 0px 1px var(--aero-black),
 		inset 0px 0px 0px 2px #d9e2eb;
-	background: var(--aero-accent);
+	background: linear-gradient(
+			to bottom,
+			transparent 0%,
+			rgba(255, 255, 255, 0.8) 30%,
+			transparent 30%
+		),
+		var(--aero-accent);
 	border-radius: 6px;
-	backdrop-filter: blur(3px);
 	box-sizing: border-box;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	padding: 8px;
 }
 
 .windowFrameGradientLeft {
@@ -65,7 +67,7 @@
 
 .contentsContainer {
 	width: fit-content;
-	height: calc(100% - 20px);
+	height: fit-content;
 	border: solid thin var(--aero-black);
 	outline: solid thin var(--aero-white);
 	background-color: white;
@@ -74,5 +76,5 @@
 }
 
 .contentsContainer > div {
-	width: calc(100vw - 36px);
+	width: calc(100vw - 38px);
 }

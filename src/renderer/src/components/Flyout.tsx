@@ -14,7 +14,7 @@ function useSize(el: HTMLDivElement | null) {
 		const resizeObserver = new ResizeObserver(() => {
 			const win = remote.getCurrentWindow();
 			const flyoutRect = el.getBoundingClientRect();
-			const width = Math.round(flyoutRect.width) + 32;
+			const width = Math.round(flyoutRect.width) + 37;
 			const height = Math.round(flyoutRect.height) + 36;
 			const tray = remote.getGlobal("tray") as Electron.Tray;
 			const b = tray.getBounds();
