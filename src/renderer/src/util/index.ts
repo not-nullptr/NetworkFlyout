@@ -97,7 +97,9 @@ export class NetUtils {
 			function grabLine(start: string) {
 				return lines
 					?.find((l) => l.startsWith(start))
-					?.split(" : ")?.[1];
+					?.split(" : ")
+					?.slice(1)
+					.join(" : ");
 			}
 			const name = grabLine("Name");
 			console.log(name);
