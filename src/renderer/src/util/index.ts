@@ -101,10 +101,25 @@ export class NetUtils {
 					?.slice(1)
 					.join(" : ");
 			}
-			const name = grabLine("Name");
-			console.log(name);
-
 			if (!lines) return;
+			return {
+				name: grabLine("Name"),
+				description: grabLine("Description"),
+				physicalAddress: grabLine("Physical address"),
+				state: grabLine("State"),
+				ssid: grabLine("SSID"),
+				bssid: grabLine("BSSID"),
+				networkType: grabLine("Network type"),
+				radioType: grabLine("Radio type"),
+				authentication: grabLine("Authentication"),
+				cipher: grabLine("Cipher"),
+				connectionMode: grabLine("Connection mode"),
+				channel: grabLine("Channel"),
+				receiveRate: grabLine("Receive rate (Mbps)"),
+				transmitRate: grabLine("Transmit rate (Mbps)"),
+				signal: parseInt(grabLine("Signal")?.replace("%", "") || "0"),
+				profile: grabLine("Profile"),
+			};
 		} catch (e) {
 			const { stdout } = e as { stdout: string };
 			console.log(stdout);
