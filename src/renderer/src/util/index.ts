@@ -89,13 +89,16 @@ export class NetUtils {
 			const { stdout } = await childProcess.exec(
 				"netsh wlan show interfaces",
 			);
+			console.log(stdout?.toString());
 			const lines = stdout
 				?.toString()
 				.split("\n")
-				.map(String.prototype.trim);
-			if (!lines) return;
+				.map((l) => l.trim());
 			console.log(lines);
-		} catch {
+			if (!lines) return;
+		} catch (e) {
+			const { stdout } = e as { stdout: string };
+			console.log(stdout);
 			return;
 		}
 	}
