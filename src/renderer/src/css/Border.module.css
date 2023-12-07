@@ -8,12 +8,13 @@
 		0px 0px 8px 1px #000000c3,
 		inset 0px 0px 0px 1px var(--aero-black),
 		inset 0px 0px 0px 2px #d9e2eb;
-	/* overflow: hidden; */
 	background: var(--aero-accent);
 	border-radius: 6px;
 	backdrop-filter: blur(3px);
 	box-sizing: border-box;
-	padding: 8px 8px 8px 7px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .windowFrameGradientLeft {
@@ -64,11 +65,14 @@
 
 .contentsContainer {
 	width: fit-content;
-	height: calc(100% - 17px);
+	height: calc(100% - 20px);
 	border: solid thin var(--aero-black);
 	outline: solid thin var(--aero-white);
-	position: absolute;
 	background-color: white;
 	border-radius: 2px;
 	overflow: hidden;
+}
+
+.contentsContainer > div {
+	width: calc(100vw - 36px);
 }
