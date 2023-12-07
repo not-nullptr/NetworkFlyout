@@ -94,7 +94,14 @@ export class NetUtils {
 				?.toString()
 				.split("\n")
 				.map((l) => l.trim());
-			console.log(lines);
+			function grabLine(start: string) {
+				return lines
+					?.find((l) => l.startsWith(start))
+					?.split(" : ")?.[1];
+			}
+			const name = grabLine("name");
+			console.log(name);
+
 			if (!lines) return;
 		} catch (e) {
 			const { stdout } = e as { stdout: string };
