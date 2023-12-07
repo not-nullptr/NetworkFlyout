@@ -90,7 +90,7 @@ export default function Flyout() {
 		isOnline();
 		const interval = setInterval(async () => {
 			await isOnline();
-			(await NetUtils.isWifi()) && setWifi(await NetUtils.grabWifiInfo());
+			setWifi(await NetUtils.grabWifiInfo());
 		}, 5000);
 		return () => {
 			clearInterval(interval);
