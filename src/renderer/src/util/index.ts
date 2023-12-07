@@ -34,7 +34,6 @@ export class NetUtils {
 		const { stdout } = await childProcess.exec(
 			"netsh interface show interface",
 		);
-		console.log(stdout?.toString());
 		const lines = stdout?.toString().split("\n");
 		if (!lines) return [];
 		const interfaces: Interface[] = [];
@@ -79,6 +78,26 @@ export class NetUtils {
 			...int,
 			type: activeInterface?.match(/^.*?adapter\s/)?.[0] || "Unknown",
 		};
+	}
+	static async isWifi() {
+		const int = await NetUtils.getActiveInterface();
+		if (!int) return false;
+		return int.type === "Wireless LAN adapter";
+	}
+	static async grabWifiInfo() {
+		try {
+			const { stdout } = await childProcess.exec(
+				"netsh wlan show interfaces",
+			);
+			const lines = stdout
+				?.toString()
+				.split("\n")
+				.map(String.prototype.trim);
+			if (!lines) return;
+			console.log(lines);
+		} catch {
+			return;
+		}
 	}
 }
 

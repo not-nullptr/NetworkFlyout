@@ -47,6 +47,7 @@ export default function Flyout() {
 	const [online, setOnline] = React.useState<boolean>(true);
 	const [img, setImg] = React.useState("");
 	useEffect(() => {
+		NetUtils.grabWifiInfo();
 		(async () => {
 			tray.setToolTip(
 				`${selected?.name}\n${toUnicodeVariant(
