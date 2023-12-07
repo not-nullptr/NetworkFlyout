@@ -101,12 +101,7 @@ export class NetUtils {
 	static async isWifi() {
 		const int = await NetUtils.getActiveInterface();
 		if (!int) return false;
-		console.log(
-			int.type,
-			int.type === "Wireless LAN adapter",
-			int.type.trim() === "Wireless LAN adapter",
-		);
-		return int.type === "Wireless LAN adapter";
+		return int.type.trim() === "Wireless LAN adapter";
 	}
 	static async grabWifiInfo() {
 		try {
