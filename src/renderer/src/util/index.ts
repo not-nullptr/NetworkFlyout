@@ -99,7 +99,7 @@ export class NetUtils {
 					?.find((l) => l.startsWith(start))
 					?.split(" : ")?.[1];
 			}
-			const name = grabLine("name");
+			const name = grabLine("Name");
 			console.log(name);
 
 			if (!lines) return;
