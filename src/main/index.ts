@@ -13,7 +13,6 @@ function createWindow(): void {
 	const mainWindow = new BrowserWindow({
 		width: 900,
 		height: 670,
-		show: false,
 		autoHideMenuBar: true,
 		...(process.platform === "linux" ? { icon } : {}),
 		webPreferences: {
@@ -27,12 +26,17 @@ function createWindow(): void {
 		transparent: true,
 		resizable: false,
 		skipTaskbar: true,
+		thickFrame: true,
 	});
 	win = mainWindow;
+	mainWindow.setHasShadow(true);
+	mainWindow.setIgnoreMouseEvents(true);
+	mainWindow.setOpacity(0);
+	mainWindow.setAlwaysOnTop(true, "pop-up-menu");
 	enable(mainWindow.webContents);
 	mainWindow.on("blur", () => {
-		// mainWindow.setOpacity(0);
-		// mainWindow.setIgnoreMouseEvents(true);
+		mainWindow.setOpacity(0);
+		mainWindow.setIgnoreMouseEvents(true);
 	});
 	mainWindow.webContents.openDevTools({
 		mode: "detach",
@@ -59,15 +63,20 @@ function createWindow(): void {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-	trayIcon = new Tray("resources/ethernet-connected.ico");
+	trayIcon = new Tray("resources/icons/pnidui_3048.ico");
 	trayIcon.setToolTip("Network");
-	trayIcon.on("click", (e, b) => {
+	trayIcon.on("click", (_, b) => {
 		if (!win) return;
 		const windowSize = win.getSize();
 		win.setPosition(b.x - windowSize[0] / 2 - 16, b.y - windowSize[1]);
-		win.setOpacity(1);
-		win.setIgnoreMouseEvents(false);
-		win.focus();
+		if (win.getOpacity() === 0) {
+			win.setOpacity(1);
+			win.setIgnoreMouseEvents(false);
+			win.focus();
+		} else {
+			win.setOpacity(0);
+			win.setIgnoreMouseEvents(true);
+		}
 	});
 	global.tray = trayIcon;
 	// Set app user model id for windows

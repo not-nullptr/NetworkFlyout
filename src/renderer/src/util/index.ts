@@ -1,6 +1,7 @@
 const childProcess = window.require(
 	"promisify-child-process",
 ) as typeof import("promisify-child-process");
+const ip = window.require("ip") as typeof import("ip");
 
 const columnWidths = [15, 15, 15, 100];
 
@@ -20,7 +21,15 @@ export interface Interface {
 	connected: boolean;
 }
 
-export class Netsh {
+export class NetUtils {
+	static async isOnline(int: Interface) {
+		if (!int.enabled || !int.connected) return false;
+		const { stdout } = await childProcess.exec(
+			"nslookup www.msftconnecttest.com",
+		);
+		const isOnline = !stdout?.toString().includes("Server:  UnKnown");
+		return isOnline;
+	}
 	static async getInterfaces() {
 		const { stdout } = await childProcess.exec(
 			"netsh interface show interface",
@@ -38,8 +47,37 @@ export class Netsh {
 				connected: tableArray[1] === "Connected",
 			});
 		}
-		console.log(interfaces);
 		return interfaces;
+	}
+	static async getActiveInterface(): Promise<
+		| (Interface & {
+				type: string;
+		  })
+		| undefined
+	> {
+		const addr = ip.address();
+		const { stdout } = await childProcess.exec("ipconfig");
+		const lines = stdout?.toString().split("\n");
+		if (!lines) return;
+		const lineIndex = lines.findIndex((l) =>
+			l.trim().endsWith(` : ${addr}`),
+		);
+		const activeInterface = lines
+			.slice(0, lineIndex)
+			.reverse()
+			.find((l) => !l.startsWith("   ") && l.trim() !== "")
+			?.trim()
+			?.replace(":", "");
+		const interfaces = await NetUtils.getInterfaces();
+		if (!activeInterface) return;
+		const int = interfaces.find(
+			(i) => i.name === activeInterface.replace(/^.*?adapter\s/, ""),
+		);
+		if (!int) return;
+		return {
+			...int,
+			type: activeInterface?.match(/^.*?adapter\s/)?.[0] || "Unknown",
+		};
 	}
 }
 

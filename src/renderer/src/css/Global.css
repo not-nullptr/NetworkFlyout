@@ -97,3 +97,21 @@ body {
 	align-items: center;
 	justify-content: center;
 }
+
+a {
+	color: #0066cc;
+	text-shadow: 0px 0px 0.5px rgba(0, 102, 204, 0.5);
+	text-decoration: none;
+	position: relative;
+}
+
+a:hover::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 1px;
+	height: 1px;
+	width: 100%;
+	background-color: #0066cc;
+}

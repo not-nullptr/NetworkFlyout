@@ -22,3 +22,16 @@
 .networkName {
 	font-weight: bold;
 }
+
+.networkAndSharingContainer {
+	width: 100%;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(
+		180deg,
+		rgba(204, 217, 234, 1) 0%,
+		rgba(241, 245, 251, 1) 8%
+	);
+}
