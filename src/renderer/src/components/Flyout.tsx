@@ -113,18 +113,26 @@ export default function Flyout() {
 			if (!int) return;
 			const online = await NetUtils.isOnline(int);
 			setOnline(online);
-			tray.setImage(
-				`resources/icons/pnidui_${getIcon(
-					online,
-					(await NetUtils.isWifi()) ? "wifi" : "ethernet",
-					wifi?.signal,
-				)}.ico`,
-			);
 			const isWifi = await NetUtils.isWifi();
 			if (isWifi) {
 				const info = await NetUtils.grabWifiInfo();
 				console.log(info);
 				setWifi(info);
+				tray.setImage(
+					`resources/icons/pnidui_${getIcon(
+						online,
+						(await NetUtils.isWifi()) ? "wifi" : "ethernet",
+						info?.signal,
+					)}.ico`,
+				);
+			} else {
+				tray.setImage(
+					`resources/icons/pnidui_${getIcon(
+						online,
+						"ethernet",
+						0,
+					)}.ico`,
+				);
 			}
 		}
 		isOnline();
