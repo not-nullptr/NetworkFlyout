@@ -1,5 +1,5 @@
 import styles from "@renderer/css/Flyout.module.css";
-import { Interface, NetUtils, toUnicodeVariant } from "@renderer/util";
+import { Interface, NetUtils, Network, toUnicodeVariant } from "@renderer/util";
 import React, { useEffect } from "react";
 const remote = window.require(
 	"@electron/remote",
@@ -46,16 +46,16 @@ export default function Flyout() {
 	>();
 	const [online, setOnline] = React.useState<boolean>(true);
 	const [img, setImg] = React.useState("");
+	const [wifi, setWifi] = React.useState<Network>();
 	useEffect(() => {
 		(async () => {
 			tray.setToolTip(
-				`${selected?.name}\n${toUnicodeVariant(
+				`${wifi?.name || selected?.name}\n${toUnicodeVariant(
 					online ? "Internet access" : "No Internet access",
 					"is",
 					"",
 				)}`,
 			);
-			console.log(await NetUtils.grabWifiInfo());
 		})();
 	}, [selected, online]);
 	useEffect(() => {
@@ -90,6 +90,7 @@ export default function Flyout() {
 		isOnline();
 		const interval = setInterval(async () => {
 			await isOnline();
+			(await NetUtils.isWifi()) && setWifi(await NetUtils.grabWifiInfo());
 		}, 5000);
 		return () => {
 			clearInterval(interval);
@@ -116,7 +117,7 @@ export default function Flyout() {
 							}}
 						>
 							{online
-								? selected?.name
+								? wifi?.name || selected?.name
 								: "No networks are available"}
 						</div>
 						<div className={styles.networkStatus}>

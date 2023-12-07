@@ -15,6 +15,25 @@ function extractColumns(row: string) {
 	return columns;
 }
 
+export interface Network {
+	name: string;
+	description: string;
+	physicalAddress: string;
+	state: string;
+	ssid: string;
+	bssid: string;
+	networkType: string;
+	radioType: string;
+	authentication: string;
+	cipher: string;
+	connectionMode: string;
+	channel: string;
+	receiveRate: string;
+	transmitRate: string;
+	signal: number;
+	profile: string;
+}
+
 export interface Interface {
 	name: string;
 	enabled: boolean;
@@ -102,7 +121,7 @@ export class NetUtils {
 					.join(" : ");
 			}
 			if (!lines) return;
-			return {
+			const obj = {
 				name: grabLine("Name"),
 				description: grabLine("Description"),
 				physicalAddress: grabLine("Physical address"),
@@ -120,6 +139,9 @@ export class NetUtils {
 				signal: parseInt(grabLine("Signal")?.replace("%", "") || "0"),
 				profile: grabLine("Profile"),
 			};
+			// if any are undefined, return undefined
+			if (Object.values(obj).some((v) => !v)) return;
+			return obj as Network;
 		} catch (e) {
 			const { stdout } = e as { stdout: string };
 			console.log(stdout);
