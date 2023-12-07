@@ -92,6 +92,7 @@ export default function Flyout() {
 			switch (type) {
 				case "wifi":
 					if (online) {
+						console.log(`strength`, strength);
 						if (strength === undefined) return 3021;
 						if (strength < 0) return 3021;
 						if (strength > 100) return 3040;
