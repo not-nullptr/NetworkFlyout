@@ -100,7 +100,7 @@ body {
 
 a {
 	color: #0066cc;
-	text-shadow: 0px 0px 0.5px rgba(0, 102, 204, 0.5);
+	text-shadow: 0px 0px 0.5px rgba(0, 102, 204, 0.25);
 	text-decoration: none;
 	position: relative;
 }
