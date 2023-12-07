@@ -78,13 +78,46 @@ export default function Flyout() {
 		);
 	}, [selected]);
 	useEffect(() => {
+		function getIcon(
+			online: boolean,
+			type: "wifi" | "ethernet",
+			strength?: number,
+		) {
+			// icon id for online, type wifi, between 0 and 20 is 3021
+			// icon id increments by 1 every 20 strength
+			// icon id for offline, type wifi, between 0 and 20 is 3027
+			// icon id increments by 1 every 20 strength
+			// icon id for online, type ethernet is 3048
+			// icon id for offline, type ethernet is 3035
+			switch (type) {
+				case "wifi":
+					if (online) {
+						if (strength === undefined) return 3021;
+						if (strength < 0) return 3021;
+						if (strength > 100) return 3040;
+						return Math.floor(strength / 20) + 3021;
+					} else {
+						if (strength === undefined) return 3027;
+						if (strength < 0) return 3027;
+						if (strength > 100) return 3040;
+						return Math.floor(strength / 20) + 3027;
+					}
+				case "ethernet":
+					if (online) return 3048;
+					else return 3035;
+			}
+		}
 		async function isOnline() {
 			const int = selected;
 			if (!int) return;
 			const online = await NetUtils.isOnline(int);
 			setOnline(online);
 			tray.setImage(
-				`resources/icons/pnidui_${online ? "3048" : "3035"}.ico`,
+				`resources/icons/pnidui_${getIcon(
+					online,
+					(await NetUtils.isWifi()) ? "wifi" : "ethernet",
+					wifi?.signal,
+				)}.ico`,
 			);
 			const isWifi = await NetUtils.isWifi();
 			if (isWifi) {
