@@ -1,0 +1,24 @@
+.flyout,
+.flyout * {
+	width: fit-content;
+	height: fit-content;
+}
+
+.networkInfo {
+	padding: 8px 12px;
+	min-width: 232px;
+}
+
+.networkDetails {
+	margin-top: 6px;
+	display: flex;
+	height: 32px;
+}
+
+.networkDetails > div {
+	margin-left: 8px;
+}
+
+.networkName {
+	font-weight: bold;
+}
