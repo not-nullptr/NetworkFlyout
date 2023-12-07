@@ -30,7 +30,9 @@ function useSize(el: HTMLDivElement | null) {
 					height: height,
 				},
 			]);
-			win.setPosition(b.x - windowSize[0] / 2 - 16, b.y - windowSize[1]);
+			const winPosX = Math.round(b.x - windowSize[0] / 2 - 16);
+			const winPosY = Math.round(b.y - windowSize[1]);
+			win.setPosition(winPosX, winPosY);
 		});
 
 		resizeObserver.observe(el);

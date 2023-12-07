@@ -68,7 +68,9 @@ app.whenReady().then(() => {
 	trayIcon.on("click", (_, b) => {
 		if (!win) return;
 		const windowSize = win.getSize();
-		win.setPosition(b.x - windowSize[0] / 2 - 16, b.y - windowSize[1]);
+		const winPosX = Math.round(b.x - windowSize[0] / 2 - 16);
+		const winPosY = Math.round(b.y - windowSize[1]);
+		win.setPosition(winPosX, winPosY);
 		if (win.getOpacity() === 0) {
 			win.setOpacity(1);
 			win.setIgnoreMouseEvents(false);
