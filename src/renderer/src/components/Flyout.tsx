@@ -57,7 +57,7 @@ export default function Flyout() {
 				)}`,
 			);
 		})();
-	}, [selected, online]);
+	}, [selected, online, wifi]);
 	useEffect(() => {
 		(async () => {
 			const active = await NetUtils.getActiveInterface();
