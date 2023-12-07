@@ -34,6 +34,7 @@ export class NetUtils {
 		const { stdout } = await childProcess.exec(
 			"netsh interface show interface",
 		);
+		console.log(stdout?.toString());
 		const lines = stdout?.toString().split("\n");
 		if (!lines) return [];
 		const interfaces: Interface[] = [];
