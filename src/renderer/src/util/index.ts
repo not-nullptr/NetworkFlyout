@@ -108,7 +108,6 @@ export class NetUtils {
 			const { stdout } = await childProcess.exec(
 				"netsh wlan show interfaces",
 			);
-			console.log(stdout?.toString());
 			const lines = stdout
 				?.toString()
 				.split("\n")

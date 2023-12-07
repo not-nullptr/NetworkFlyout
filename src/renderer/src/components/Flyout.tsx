@@ -86,7 +86,9 @@ export default function Flyout() {
 			tray.setImage(
 				`resources/icons/pnidui_${online ? "3048" : "3035"}.ico`,
 			);
-			setWifi(await NetUtils.grabWifiInfo());
+			const info = await NetUtils.grabWifiInfo();
+			console.log(info);
+			setWifi(info);
 		}
 		isOnline();
 		const interval = setInterval(async () => {
