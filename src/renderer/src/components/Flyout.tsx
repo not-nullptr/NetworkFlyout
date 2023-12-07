@@ -50,7 +50,7 @@ export default function Flyout() {
 	useEffect(() => {
 		(async () => {
 			tray.setToolTip(
-				`${wifi?.name || selected?.name}\n${toUnicodeVariant(
+				`${wifi?.ssid || selected?.name}\n${toUnicodeVariant(
 					online ? "Internet access" : "No Internet access",
 					"is",
 					"",
@@ -86,9 +86,12 @@ export default function Flyout() {
 			tray.setImage(
 				`resources/icons/pnidui_${online ? "3048" : "3035"}.ico`,
 			);
-			const info = await NetUtils.grabWifiInfo();
-			console.log(info);
-			setWifi(info);
+			const isWifi = await NetUtils.isWifi();
+			if (isWifi) {
+				const info = await NetUtils.grabWifiInfo();
+				console.log(info);
+				setWifi(info);
+			}
 		}
 		isOnline();
 		const interval = setInterval(async () => {
@@ -119,7 +122,7 @@ export default function Flyout() {
 							}}
 						>
 							{online
-								? wifi?.name || selected?.name
+								? wifi?.ssid || selected?.name
 								: "No networks are available"}
 						</div>
 						<div className={styles.networkStatus}>
