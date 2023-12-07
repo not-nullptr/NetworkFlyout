@@ -86,11 +86,11 @@ export default function Flyout() {
 			tray.setImage(
 				`resources/icons/pnidui_${online ? "3048" : "3035"}.ico`,
 			);
+			setWifi(await NetUtils.grabWifiInfo());
 		}
 		isOnline();
 		const interval = setInterval(async () => {
 			await isOnline();
-			setWifi(await NetUtils.grabWifiInfo());
 		}, 5000);
 		return () => {
 			clearInterval(interval);
