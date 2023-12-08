@@ -68,8 +68,8 @@
 .contentsContainer {
 	width: fit-content;
 	height: fit-content;
-	border: solid thin var(--aero-black);
-	outline: solid thin var(--aero-white);
+	border: solid 1px var(--aero-black);
+	outline: solid 1px var(--aero-white);
 	background-color: white;
 	border-radius: 2px;
 	overflow: hidden;
